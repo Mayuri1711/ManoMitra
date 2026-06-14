@@ -111,9 +111,12 @@ export default function Layout({ children }) {
                 <span className="text-xl">🪔</span>
                 <span className="font-display font-bold text-lg text-text-main">ManoMitra</span>
               </div>
-              <p className="font-body text-sm text-text-soft leading-relaxed">
+              <p className="font-body text-sm text-text-soft leading-relaxed mb-2">
                 Your AI companion for calm mind, focused study, and Indian-style wellness.
               </p>
+              <Link to="/about" className="font-body text-xs text-saffron hover:text-saffron-dark underline underline-offset-2">
+                About ManoMitra →
+              </Link>
             </div>
             <div>
               <h4 className="font-body font-semibold text-text-main mb-3 text-sm">Crisis Support India</h4>

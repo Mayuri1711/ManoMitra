@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# AI assistants & crawlers — extra context about this site
+# See: /llms.txt and /ai-context.txt
+
+Sitemap: https://manomitra.pages.dev/sitemap.xml

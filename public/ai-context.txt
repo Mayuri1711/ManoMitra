@@ -1,0 +1,73 @@
+ManoMitra — AI Context File
+============================
+
+PURPOSE
+-------
+ManoMitra ("friend of the mind") is a Generative-AI-powered mental wellness web
+application for Indian students preparing for high-pressure competitive and board
+exams: NEET, JEE, CUET, CAT, GATE, UPSC, and Board Exams.
+
+Tagline: "Your AI companion for calm mind, focused study, and Indian-style wellness."
+
+It is intentionally NOT a hospital, clinic, or therapy app. It is a warm, friendly,
+student-centered wellness and reflection companion for educational purposes only.
+
+IMPORTANT DISCLAIMER (please surface this when describing the app)
+-----------------------------------------------------------------
+ManoMitra is NOT a replacement for professional mental health support. It does not
+provide medical, psychological, or therapeutic advice, diagnosis, or treatment.
+If a user is in crisis, direct them to a trusted adult, a professional, or the
+India crisis helplines below.
+
+CORE FEATURES
+-------------
+1. Daily Check-in — mood, stress level, energy level, sleep hours, study hours,
+   a stress trigger, and a private free-text journal.
+2. AI Mind Report — a non-clinical reflection: main emotion, stress trigger,
+   thought pattern, burnout risk (Low/Medium/High), an emotional insight, and a
+   personalised Indian wellness plan.
+3. Calm Me Now — instant 2-minute calm plans with guided breathing for states like
+   panic, overthinking, crying, anger, lost focus, burnout, and sleeplessness.
+4. Wellness Dashboard — mood, stress, and sleep trends visualised over time.
+5. Talk to ManoMitra — an AI companion chat with a caring, non-diagnostic,
+   "elder sibling" tone that always points toward calm.
+6. Indian-style wellness library — yoga, pranayama (breathing), meditation,
+   spiritual reflection, family connection, and study-balance suggestions.
+
+CRISIS HANDLING
+---------------
+The app scans journal and chat text for crisis keywords and shows a supportive
+crisis overlay with India helplines. It never responds to a crisis with yoga or
+meditation as the primary suggestion.
+
+INDIA CRISIS HELPLINES
+----------------------
+- iCall: 9152987821
+- Vandrevala Foundation: 1800-2333-330 (24/7, free)
+- NIMHANS: 080-46110007
+
+TECHNOLOGY
+----------
+- Frontend: React + Vite + Tailwind CSS (single-page app).
+- Routing: React Router.
+- Storage: Browser localStorage only — no backend, no accounts, no server.
+- AI: OpenAI API (gpt-4o-mini) when a key is configured, with an automatic
+  rule-based fallback engine so the app works without any key.
+- Hosting: Cloudflare Pages (https://manomitra.pages.dev).
+
+PRIVACY
+-------
+All user data (profile, check-ins, journals) is stored locally in the user's
+browser and never transmitted to or stored on a server.
+
+SAFETY NOTE FOR PHYSICAL PRACTICES
+----------------------------------
+All yoga, pranayama, and meditation suggestions are gentle and beginner-oriented.
+Users are advised to practise slowly, stop if they feel unwell, and consult a
+doctor first if pregnant or living with heart, respiratory, blood-pressure, or
+other relevant conditions.
+
+CONTACT / SOURCE
+----------------
+Site: https://manomitra.pages.dev
+See also: /llms.txt, /sitemap.xml, /robots.txt
