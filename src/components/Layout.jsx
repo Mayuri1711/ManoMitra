@@ -125,9 +125,12 @@ export default function Layout({ children }) {
             </div>
             <div>
               <h4 className="font-body font-semibold text-text-main mb-3 text-sm">Disclaimer</h4>
-              <p className="font-body text-xs text-text-soft leading-relaxed">
+              <p className="font-body text-xs text-text-soft leading-relaxed mb-2">
                 ManoMitra is not a replacement for professional mental health support. It is a wellness and reflection companion for educational purposes only. If you are in crisis, please reach out to a mental health professional immediately.
               </p>
+              <Link to="/terms" className="font-body text-xs text-saffron hover:text-saffron-dark underline underline-offset-2">
+                Read full Terms &amp; Safety →
+              </Link>
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-saffron/10 text-center">

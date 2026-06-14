@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useApp } from '../context/AppContext.jsx'
 import { crisisDetect } from '../lib/crisisDetect.js'
 import { generateAIReport } from '../lib/openaiClient.js'
+import { setSafetyAck } from '../lib/storage.js'
 import MoodSelector from '../components/MoodSelector.jsx'
 import SliderInput from '../components/SliderInput.jsx'
 import CrisisAlert from '../components/CrisisAlert.jsx'
@@ -43,10 +44,13 @@ export default function CheckIn() {
   const [crisis, setCrisis] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [demoApplied, setDemoApplied] = useState(false)
+  const [agreed, setAgreed] = useState(false)
 
   useEffect(() => {
     if (isDemo) {
       setForm(DEMO_DATA)
+      setDemoApplied(true)
     }
   }, [isDemo])
 
@@ -63,7 +67,9 @@ export default function CheckIn() {
     e.preventDefault()
     if (!form.mood) { setError('Please select your mood'); return }
     if (!form.trigger) { setError('Please select a stress trigger'); return }
+    if (!agreed) { setError('Please accept the Terms & Safety to continue'); return }
     setError('')
+    setSafetyAck(true)
     setLoading(true)
     setIsLoading(true)
 
@@ -88,6 +94,12 @@ export default function CheckIn() {
 
   function loadDemo() {
     setForm(DEMO_DATA)
+    setError('')
+    setDemoApplied(true)
+    // Re-trigger the highlight animation if clicked again
+    setTimeout(() => {
+      document.getElementById('demo-banner')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 50)
   }
 
   return (
@@ -100,12 +112,36 @@ export default function CheckIn() {
         <p className="font-body text-text-soft text-sm">
           {profile?.name ? `Hello, ${profile.name}! ` : ''}How are you doing today?
         </p>
-        {!isDemo && (
-          <button onClick={loadDemo} className="mt-2 font-body text-xs text-saffron hover:text-saffron-dark underline underline-offset-2 transition-colors">
-            ✨ Try Sample Student (JEE Demo)
-          </button>
-        )}
+        <button onClick={loadDemo} className="mt-2 font-body text-xs text-saffron hover:text-saffron-dark underline underline-offset-2 transition-colors">
+          ✨ Try Sample Student (JEE Demo)
+        </button>
       </div>
+
+      {/* Sample data confirmation banner */}
+      {demoApplied && (
+        <div
+          id="demo-banner"
+          className="mb-6 flex items-start gap-3 bg-calm-green/10 border border-calm-green/30 rounded-2xl p-4 animate-slide-up"
+        >
+          <span className="text-xl flex-shrink-0">✅</span>
+          <div className="flex-1">
+            <p className="font-body font-semibold text-calm-green-dark text-sm mb-0.5">
+              Sample student data applied
+            </p>
+            <p className="font-body text-xs text-text-soft leading-relaxed">
+              A JEE aspirant's check-in has been filled in below — mood, stress, sleep, trigger, and journal.
+              Edit anything you like, then tap <strong>Generate My Mind Report</strong>.
+            </p>
+          </div>
+          <button
+            onClick={() => setDemoApplied(false)}
+            className="flex-shrink-0 text-text-soft hover:text-text-main font-body text-lg leading-none"
+            aria-label="Dismiss"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6 animate-slide-up">
         {/* Mood */}
@@ -195,6 +231,22 @@ export default function CheckIn() {
           <p className="font-body text-xs text-text-soft mt-1">{form.journal.length} characters</p>
         </div>
 
+        {/* Gentle care acknowledgment */}
+        <label className="flex items-start gap-3 cursor-pointer bg-calm-green/10 border border-calm-green/30 rounded-2xl p-4">
+          <input
+            type="checkbox"
+            checked={agreed}
+            onChange={e => setAgreed(e.target.checked)}
+            className="mt-0.5 accent-calm-green w-4 h-4 flex-shrink-0"
+          />
+          <span className="font-body text-sm text-text-main leading-relaxed">
+            I'll be gentle with myself and take these as friendly wellness tips.{' '}
+            <Link to="/terms" className="text-calm-green-dark underline underline-offset-2 hover:text-saffron-dark" target="_blank">
+              Terms &amp; Safety
+            </Link>
+          </span>
+        </label>
+
         {error && (
           <div className="bg-rose-warm/10 border border-rose-warm/30 rounded-2xl p-4">
             <p className="font-body text-sm text-rose-warm">{error}</p>
@@ -203,8 +255,8 @@ export default function CheckIn() {
 
         <button
           type="submit"
-          disabled={loading}
-          className={`btn-primary w-full py-4 text-base ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+          disabled={loading || !agreed}
+          className={`btn-primary w-full py-4 text-base ${loading || !agreed ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           {loading ? (
             <span className="flex items-center justify-center gap-3">

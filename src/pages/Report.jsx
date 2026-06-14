@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext.jsx'
 import BurnoutBadge from '../components/BurnoutBadge.jsx'
 import WellnessCard from '../components/WellnessCard.jsx'
+import SafetyNote from '../components/SafetyNote.jsx'
 import { moodEmojis } from '../data/wellness.js'
 
 const actionCards = [
@@ -109,6 +110,11 @@ export default function Report() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Safety note */}
+      <div className="mb-6">
+        <SafetyNote />
       </div>
 
       {/* Navigation */}

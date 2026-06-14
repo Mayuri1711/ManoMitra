@@ -8,6 +8,7 @@ import Report from './pages/Report.jsx'
 import CalmMe from './pages/CalmMe.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Chat from './pages/Chat.jsx'
+import Terms from './pages/Terms.jsx'
 
 function GuardedRoute({ children }) {
   const { profile } = useApp()
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/setup" element={<Setup />} />
         <Route path="/calm" element={<CalmMe />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/checkin" element={<CheckIn />} />
         <Route path="/report" element={<GuardedRoute><Report /></GuardedRoute>} />
         <Route path="/dashboard" element={<GuardedRoute><Dashboard /></GuardedRoute>} />

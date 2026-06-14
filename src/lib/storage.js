@@ -1,5 +1,6 @@
 const PROFILE_KEY = 'manomitra_profile'
 const CHECKINS_KEY = 'manomitra_checkins'
+const SAFETY_ACK_KEY = 'manomitra_safety_ack'
 
 export function getProfile() {
   try {
@@ -30,7 +31,24 @@ export function saveCheckIn(checkIn) {
   return updated
 }
 
+export function getSafetyAck() {
+  try {
+    return localStorage.getItem(SAFETY_ACK_KEY) === 'true'
+  } catch {
+    return false
+  }
+}
+
+export function setSafetyAck(value) {
+  try {
+    localStorage.setItem(SAFETY_ACK_KEY, value ? 'true' : 'false')
+  } catch {
+    // ignore storage errors
+  }
+}
+
 export function clearAll() {
   localStorage.removeItem(PROFILE_KEY)
   localStorage.removeItem(CHECKINS_KEY)
+  localStorage.removeItem(SAFETY_ACK_KEY)
 }

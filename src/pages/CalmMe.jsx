@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { calmPlans } from '../data/wellness.js'
 import CrisisAlert from '../components/CrisisAlert.jsx'
+import SafetyNote from '../components/SafetyNote.jsx'
+import SafetyGate from '../components/SafetyGate.jsx'
+import { getSafetyAck } from '../lib/storage.js'
 
 const calmOptions = [
   { key: 'panicking', emoji: '😱', label: 'I am panicking', color: 'border-soft-blue/40 hover:bg-soft-blue/10' },
@@ -24,6 +27,7 @@ const colorMap = {
 export default function CalmMe() {
   const [selected, setSelected] = useState(null)
   const [showCrisis, setShowCrisis] = useState(false)
+  const [safetyAck, setSafetyAckState] = useState(getSafetyAck())
 
   const plan = selected ? calmPlans[selected] : null
 
@@ -39,6 +43,7 @@ export default function CalmMe() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
       {showCrisis && <CrisisAlert onDismiss={() => setShowCrisis(false)} />}
+      {!safetyAck && plan && !showCrisis && <SafetyGate onAccept={() => setSafetyAckState(true)} />}
 
       {/* Hero */}
       <div className="text-center mb-10 animate-fade-in">
@@ -97,6 +102,10 @@ export default function CalmMe() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-6">
+              <SafetyNote compact />
             </div>
           </div>
 
